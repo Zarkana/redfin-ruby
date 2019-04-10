@@ -23,4 +23,6 @@ property_search.drpbx_max_price_send_keys("$175k")
 property_search.drpbx_min_beds_send_keys("1")
 property_search.drpbx_max_beds_send_keys("2")
 
+property_search.txt_baths_send_keys("1.25+")
+
 sleep(5)

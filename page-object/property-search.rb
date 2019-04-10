@@ -14,9 +14,8 @@ class PropertySearch < BasePage
   end
 
   #Filters
- 
 
-  def drpbx_min_price_send_keys(text)    
+  def drpbx_min_price_send_keys(text)
     # element = find_web_element(:css, "span.quickMinPrice.withFlyout.withOptions.mounted.field.select.Select.clickable.optional")
     element = find_web_element(:css, ".minPrice.withFlyout.withOptions.mounted.field.select.Select.clickable.optional")
     element.click
@@ -49,8 +48,24 @@ class PropertySearch < BasePage
   end
 
   def txt_baths_send_keys(text)
-    element = find_web_element(:css, "span.maxBeds.withFlyout.withOptions.mounted.field.select.Select.clickable.optional")
-    element.click    
+    element = find_web_element(:css, "span.baths span.value")
+    
+    num_beds = element.text
+    i = 0
+    
+    while (num_beds != text && (i < 20))
+      btn_step_up_click
+      element = find_web_element(:css, "span.baths span.value")
+      num_beds = element.text
+      i = i +1      
+    end
+    if text != element.text
+      raise "#{text} number of bed options do not exist!"
+    end
+  end
+  def btn_step_up_click
+    element = find_web_element(:css, "span.baths span.step-up")
+    element.click
   end
 
 end
