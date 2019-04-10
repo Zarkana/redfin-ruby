@@ -1,8 +1,8 @@
 require 'selenium-webdriver'
 
 class BasePage
-  attr_accessor :w_element
-  attr_writer :base_driver  
+  # attr_accessor :w_element
+  # attr_writer :base_driver  
   
   # def initialize(driver)
   #   @base_driver = driver
