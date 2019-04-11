@@ -9,12 +9,12 @@ class Home < BasePage
   end
 
   def btn_search_click
-    btn_search = find_web_element(:css, 'button.SearchButton.clickable')  
+    btn_search = web_element(:css, 'button.SearchButton.clickable')  
     btn_search.click
   end
 
   def txt_search_box_send_keys(text)
-    search_box = find_web_element(:css, '#search-box-input')  
+    search_box = web_element(:css, '#search-box-input')  
     search_box.send_keys text
   end
 end
