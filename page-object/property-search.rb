@@ -1,4 +1,5 @@
 require 'selenium-webdriver'
+require 'rspec'
 require_relative 'base-page'
 
 class PropertySearch < BasePage
@@ -78,20 +79,19 @@ class PropertySearch < BasePage
 
   def validate_min_price(min_price)
     @price_results.each do |price_result|
-      # puts "if #{price_result} of class #{price_result.class} is lower than #{min_price} of class #{min_price.class}"
-      if price_result < min_price
-        puts "FAILED: #{price_result} is lower than the min"
+      if price_result < min_price        
+        fail "FAILED: #{price_result} is lower than the min of #{min_price}"
       else
-        puts "PASSED: #{price_result} is greater than the min"
+        puts "PASSED: #{price_result} is greater than the min of #{min_price}"
       end
     end
   end
   def validate_max_price(max_price)
     @price_results.each do |price_result|
       if price_result > max_price
-        puts "FAILED: #{price_result} is greater than the max"
+        fail "FAILED: #{price_result} is greater than the max of #{max_price}"
       else
-        puts "PASSED: #{price_result} is lower than the max"
+        puts "PASSED: #{price_result} is lower than the max of #{max_price}"
       end
     end
   end
@@ -99,18 +99,18 @@ class PropertySearch < BasePage
   def validate_min_bed(min_beds)
     @number_bed_results.each do |bed_result|
       if bed_result < min_beds
-        puts "FAILED: #{bed_result} is lower than the min"
+        fail "FAILED: #{bed_result} is lower than the min of #{min_beds}"
       else
-        puts "PASSED: #{bed_result} is greater than the min"
+        puts "PASSED: #{bed_result} is greater than the min of #{min_beds}"
       end
     end
   end
   def validate_max_bed(max_beds)
     @number_bed_results.each do |bed_result|
       if bed_result > max_beds
-        puts "FAILED: #{bed_result} is greater than the max"
+        fail "FAILED: #{bed_result} is greater than the max of #{max_beds}"
       else
-        puts "PASSED: #{bed_result} is lower than the max"
+        puts "PASSED: #{bed_result} is lower than the max of #{max_beds}"
       end
     end
   end
@@ -118,9 +118,9 @@ class PropertySearch < BasePage
   def validate_min_bath(min_baths)
     @number_bath_results.each do |bath_result|
       if bath_result < min_baths
-        puts "FAILED: #{bath_result} is lower than the min"
+        fail "FAILED: #{bath_result} is lower than the min of #{min_baths}"
       else
-        puts "PASSED: #{bath_result} is greater than the min"
+        puts "PASSED: #{bath_result} is greater than the min of #{min_baths}"
       end
     end
   end
@@ -142,29 +142,23 @@ class PropertySearch < BasePage
     
     @price_results = []
     @number_bed_results = []
-    @number_bath_results = []
+    @number_bath_results = [0]
 
     total_pages.times do |page_num|
       if page_num > 0
         element = web_element(:css, "[data-rf-test-id='react-data-paginate-page-#{page_num}']")
         element.click
-        puts "GO TO PAGE: #{page_num + 1}"
       end
 
       #TODO: Compare total results to total compared?
-
-      # attr_writer :price_results, :number_bed_results, :number_bath_results
-      puts "PRICES"      
       @price_results += web_elements(:css, "div.homecards div.HomeCardContainer .bottomV2 [data-rf-test-name='homecard-price']").map do |price_element|        
         value = price_element.text.sub(",", "").sub("$", "").sub("+", "").to_i
       end      
 
-      puts "NUM BEDS"
       @number_bed_results += web_elements(:css, "div.homecards div.HomeCardContainer .bottomV2 .HomeStatsV2 .stats").select {|x| x.text.include? "Bed"}.delete_if {|x| x.text.include? "—"}.map do |bed_element|
         number = bed_element.text.sub("Beds", "").sub(" ", "").to_f
       end
 
-      puts "NUM BATHS"
       @number_bath_results += web_elements(:css, "div.homecards div.HomeCardContainer .bottomV2 .HomeStatsV2 .stats").select {|x| x.text.include? "Bath"}.delete_if {|x| x.text.include? "—"}.map do |bath_element|
         number = bath_element.text.sub("Baths", "").sub(" ", "").to_f
       end
