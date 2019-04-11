@@ -1,18 +1,7 @@
 require 'selenium-webdriver'
 
 class BasePage
-  # attr_accessor :w_element
-  # attr_writer :base_driver  
   
-  # def initialize(driver)
-  #   @base_driver = driver
-  # end
-
-  # def get_web_element(driver, by, timeout = 30)
-
-  # end
-
-  #rename?
   def web_element(type, name)
     #use wait_for method
     wait = Selenium::WebDriver::Wait.new(timeout: 15)

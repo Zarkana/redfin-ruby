@@ -1,5 +1,4 @@
 require 'selenium-webdriver'
-require 'rspec'
 require_relative 'base-page'
 
 class PropertySearch < BasePage
@@ -142,7 +141,7 @@ class PropertySearch < BasePage
     
     @price_results = []
     @number_bed_results = []
-    @number_bath_results = [0]
+    @number_bath_results = []
 
     total_pages.times do |page_num|
       if page_num > 0
