@@ -23,7 +23,7 @@ class PropertySearchFiltersTest < Test::Unit::TestCase
     sleep(2)
     @property_search.btn_more_filters_click
     @property_search.drpbx_min_price_send_keys("$75k")
-    @property_search.drpbx_max_price_send_keys("$1M")
+    @property_search.drpbx_max_price_send_keys("$700k")
 
     @property_search.drpbx_min_beds_send_keys("1")
     @property_search.drpbx_max_beds_send_keys("2")
@@ -36,7 +36,7 @@ class PropertySearchFiltersTest < Test::Unit::TestCase
 
   def test_min_price
     @property_search.validate_min_price(75_000)
-    @property_search.validate_max_price(1_000_000)
+    @property_search.validate_max_price(700_000)
 
     @property_search.validate_min_bed(1)
     @property_search.validate_max_bed(2)
