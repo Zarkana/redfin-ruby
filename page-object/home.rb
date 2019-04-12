@@ -20,14 +20,11 @@ class Home < BasePage
       begin
         element.send_keys text  
       rescue Selenium::WebDriver::Error::ElementNotInteractableError
-        puts "WOOPS"
-      end      
+        puts "resuced from ElementNotInteractableError exception"
+      end
       if element.attribute('value').downcase.include? text.downcase
         true
       end
     }
-
-    # search_box = web_element(:css, '#search-box-input')  
-    # search_box.send_keys text
   end
 end

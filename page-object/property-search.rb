@@ -144,12 +144,14 @@ class PropertySearch < BasePage
     @number_bath_results = []
 
     total_pages.times do |page_num|
+
+      wait_for(10) { @driver.find_element(:css, '.Pushpin.homePushpin.clickableHome.animateMarkers').displayed? }
+
       if page_num > 0
         element = web_element(:css, "[data-rf-test-id='react-data-paginate-page-#{page_num}']")
         element.click
       end
 
-      #TODO: Compare total results to total compared?
       @price_results += web_elements(:css, "div.homecards div.HomeCardContainer .bottomV2 [data-rf-test-name='homecard-price']").map do |price_element|        
         value = price_element.text.sub(",", "").sub("$", "").sub("+", "").to_i
       end      
